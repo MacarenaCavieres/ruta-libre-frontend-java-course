@@ -31,3 +31,18 @@ export type DraftClient = {
 export type Client = DraftClient & {
     id: number;
 };
+
+export type DraftBooking = {
+    client: Client;
+    vehicle: Vehicle;
+    startDate: Date;
+    endDate: Date;
+};
+
+export type Booking = DraftBooking & {
+    id: number;
+};
+
+export type MessageResponse = {
+    message: string;
+};

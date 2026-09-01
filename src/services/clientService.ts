@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Client, DraftClient } from "../types";
+import type { Client, DraftClient, MessageResponse } from "../types";
 
 export async function createClient(client: DraftClient) {
     try {
@@ -39,7 +39,7 @@ export async function updateClient(clientId: number, client: Client) {
 
 export async function removeClient(clientId: number) {
     try {
-        const { data } = await axios.delete<string>(`http://localhost:8080/api/client/${clientId}`);
+        const { data } = await axios.delete<MessageResponse>(`http://localhost:8080/api/client/${clientId}`);
         if (data) {
             return data;
         }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { DraftVehicle, Vehicle } from "../types";
+import type { DraftVehicle, MessageResponse, Vehicle } from "../types";
 
 export async function createVehicle(vehicle: DraftVehicle) {
     try {
@@ -16,6 +16,7 @@ export async function createVehicle(vehicle: DraftVehicle) {
 export async function getVehicles() {
     try {
         const { data } = await axios.get<Vehicle[]>(`http://localhost:8080/api/vehicle`);
+        console.log(data);
         if (data) {
             return data;
         }
@@ -37,9 +38,9 @@ export async function updateVehicle(vehicleId: number, vehicle: Vehicle) {
     }
 }
 
-export async function deleteVehicle(vehicleId: number) {
+export async function removeVehicle(vehicleId: number) {
     try {
-        const { data } = await axios.delete<Vehicle>(`http://localhost:8080/api/vehicle/${vehicleId}`);
+        const { data } = await axios.delete<MessageResponse>(`http://localhost:8080/api/vehicle/${vehicleId}`);
         if (data) {
             return data;
         }
