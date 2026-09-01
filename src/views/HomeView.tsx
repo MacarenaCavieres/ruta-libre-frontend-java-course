@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import VehicleCard from "./components/VehicleCard";
-import { CarStatus, type Car } from "./types";
-import { getVehicles } from "./services/vehicleService";
+import VehicleCard from "../components/VehicleCard";
+import { VehicleStatus, type Vehicle } from "../types";
+import { getVehicles } from "../services/vehicleService";
 
-function App() {
-    const [cars, setCars] = useState<Car[] | undefined>([]);
-    const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+function HomeView() {
+    const [cars, setCars] = useState<Vehicle[] | undefined>([]);
+    const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
     const [isReserved, setIsReserved] = useState<boolean>(false);
     const [clientName, setClientName] = useState<string>("");
     const [rentalDays, setRentalDays] = useState<number>(1);
@@ -16,8 +16,8 @@ function App() {
             .catch((err) => console.log(err));
     }, []);
 
-    const handleSelectCar = (car: Car) => {
-        setSelectedCar(car);
+    const handleSelectCar = (vehicle: Vehicle) => {
+        setSelectedVehicle(vehicle);
         setIsReserved(false);
         setClientName("");
         setRentalDays(1);
@@ -30,26 +30,21 @@ function App() {
         setIsReserved(true);
 
         setCars((prevCars) =>
-            prevCars?.map((c) => (c.id === selectedCar?.id ? { ...c, status: CarStatus.RESERVED } : c)),
+            prevCars?.map((c) => (c.id === selectedVehicle?.id ? { ...c, status: VehicleStatus.RESERVED } : c)),
         );
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-12 bg-gray-50 min-h-screen">
-            <header className="mb-12 text-center">
-                <h1 className="text-6xl font-extrabold text-gray-900 tracking-tight mb-3">Ruta libre</h1>
-                <p className="text-lg text-gray-500">Tu próximo destino empieza sobre cuatro ruedas</p>
-            </header>
-
+        <div>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
                 <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {cars?.map((car) => (
-                        <VehicleCard key={car.id} car={car} onSelect={handleSelectCar} />
+                    {cars?.map((vehicle) => (
+                        <VehicleCard key={vehicle.id} vehicle={vehicle} onSelect={handleSelectCar} />
                     ))}
                 </div>
 
                 <div className="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
-                    {!selectedCar && (
+                    {!selectedVehicle && (
                         <div className="text-center py-8 text-gray-400">
                             <span className="text-4xl">🚗</span>
                             <p className="mt-3 text-sm font-medium">
@@ -58,11 +53,11 @@ function App() {
                         </div>
                     )}
 
-                    {selectedCar && !isReserved && (
+                    {selectedVehicle && !isReserved && (
                         <div>
                             <h3 className="text-lg font-bold text-gray-900 mb-1">Confirmar Reserva</h3>
                             <p className="text-xs text-indigo-600 font-semibold mb-4 uppercase tracking-wider">
-                                {selectedCar.brand} {selectedCar.model}
+                                {selectedVehicle.brand} {selectedVehicle.model}
                             </p>
 
                             <form onSubmit={handleSubmitReservation} className="space-y-4">
@@ -101,7 +96,7 @@ function App() {
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setSelectedCar(null)}
+                                    onClick={() => setSelectedVehicle(null)}
                                     className="w-full text-center text-xs text-gray-400 hover:text-gray-600 transition-colors"
                                 >
                                     Cancelar
@@ -110,7 +105,7 @@ function App() {
                         </div>
                     )}
 
-                    {selectedCar && isReserved && (
+                    {selectedVehicle && isReserved && (
                         <div className="text-center py-4">
                             <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
                                 ✓
@@ -125,10 +120,10 @@ function App() {
                                     👤 <b>Cliente:</b> {clientName}
                                 </p>
                                 <p>
-                                    🚘 <b>Auto:</b> {selectedCar.brand} {selectedCar.model}
+                                    🚘 <b>Auto:</b> {selectedVehicle.brand} {selectedVehicle.model}
                                 </p>
                                 <p>
-                                    🪪 <b>Patente:</b> <span className="font-mono">{selectedCar.plate}</span>
+                                    🪪 <b>Patente:</b> <span className="font-mono">{selectedVehicle.plate}</span>
                                 </p>
                                 <p>
                                     📆 <b>Tiempo:</b> {rentalDays} {rentalDays === 1 ? "día" : "días"}
@@ -136,7 +131,7 @@ function App() {
                             </div>
 
                             <button
-                                onClick={() => setSelectedCar(null)}
+                                onClick={() => setSelectedVehicle(null)}
                                 className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl text-xs transition-colors"
                             >
                                 Reservar otro auto
@@ -148,5 +143,4 @@ function App() {
         </div>
     );
 }
-
-export default App;
+export default HomeView;

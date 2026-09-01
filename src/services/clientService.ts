@@ -1,9 +1,9 @@
 import axios from "axios";
-import type { DraftVehicle, Vehicle } from "../types";
+import type { Client, DraftClient } from "../types";
 
-export async function createVehicle(vehicle: DraftVehicle) {
+export async function createClient(client: DraftClient) {
     try {
-        const { data } = await axios.post<Vehicle>(`http://localhost:8080/api/vehicle`, vehicle);
+        const { data } = await axios.post<Client>(`http://localhost:8080/api/client`, client);
         if (data) {
             return data;
         }
@@ -13,9 +13,9 @@ export async function createVehicle(vehicle: DraftVehicle) {
     }
 }
 
-export async function getVehicles() {
+export async function getClients() {
     try {
-        const { data } = await axios.get<Vehicle[]>(`http://localhost:8080/api/vehicle`);
+        const { data } = await axios.get<Client[]>(`http://localhost:8080/api/client`);
         if (data) {
             return data;
         }
@@ -25,9 +25,9 @@ export async function getVehicles() {
     }
 }
 
-export async function updateVehicle(vehicleId: number, vehicle: Vehicle) {
+export async function updateClient(clientId: number, client: Client) {
     try {
-        const { data } = await axios.put<Vehicle>(`http://localhost:8080/api/vehicle/${vehicleId}`, vehicle);
+        const { data } = await axios.put<Client>(`http://localhost:8080/api/client/${clientId}`, client);
         if (data) {
             return data;
         }
@@ -37,9 +37,9 @@ export async function updateVehicle(vehicleId: number, vehicle: Vehicle) {
     }
 }
 
-export async function deleteVehicle(vehicleId: number) {
+export async function removeClient(clientId: number) {
     try {
-        const { data } = await axios.delete<Vehicle>(`http://localhost:8080/api/vehicle/${vehicleId}`);
+        const { data } = await axios.delete<string>(`http://localhost:8080/api/client/${clientId}`);
         if (data) {
             return data;
         }
