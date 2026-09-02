@@ -38,9 +38,6 @@ function VehicleCard({ vehicle, onSelect }: Props) {
             <div className="p-5">
                 <div className="flex justify-between items-start mb-3">
                     <div>
-                        <span className="text-xs font-semibold text-indigo-600 uppercase tracking-wider">
-                            {vehicle.category}
-                        </span>
                         <h3 className="text-xl font-bold text-gray-900 mt-1">
                             {vehicle.brand} <span className="font-medium text-gray-600">{vehicle.model}</span>
                         </h3>

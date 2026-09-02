@@ -4,6 +4,7 @@ import type { Booking, DraftBooking, MessageResponse } from "../types";
 export async function createBooking(booking: DraftBooking) {
     try {
         const { data } = await axios.post<Booking>(`http://localhost:8080/api/booking`, booking);
+        console.log(data);
         if (data) {
             return data;
         }
@@ -25,7 +26,7 @@ export async function getBookings() {
     }
 }
 
-export async function updateBooking(bookingId: number, booking: Booking) {
+export async function updateBooking(bookingId: number, booking: DraftBooking) {
     try {
         const { data } = await axios.put<Booking>(`http://localhost:8080/api/booking/${bookingId}`, booking);
         if (data) {

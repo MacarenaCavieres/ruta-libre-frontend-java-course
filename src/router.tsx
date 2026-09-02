@@ -3,6 +3,7 @@ import HomeView from "./views/HomeView";
 import ClientView from "./views/ClientView";
 import VehicleView from "./views/VehicleView";
 import AppLayout from "./layouts/AppLayout";
+import BookingView from "./views/BookingView";
 
 function Router() {
     return (
@@ -12,6 +13,7 @@ function Router() {
                     <Route path="/" element={<HomeView />}></Route>
                     <Route path="/client" element={<ClientView />}></Route>
                     <Route path="/vehicle" element={<VehicleView />}></Route>
+                    <Route path="/booking" element={<BookingView />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

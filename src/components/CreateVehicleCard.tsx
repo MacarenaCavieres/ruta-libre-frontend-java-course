@@ -1,19 +1,35 @@
-import type { Vehicle } from "../types";
+import { type Vehicle, VehicleStatus } from "../types";
 
 type Props = {
     vehicle: Vehicle;
+    onEdit?: (vehicle: Vehicle) => void;
+    onDelete?: (id: number) => void;
 };
 
-function CreateVehicleCard({ vehicle }: Props) {
+function CreateVehicleCard({ vehicle, onEdit, onDelete }: Props) {
+    const getStatusStyle = (status: VehicleStatus) => {
+        switch (status) {
+            case VehicleStatus.AVAILABLE:
+                return { badge: "bg-green-100 text-green-800 border-green-200", text: "Disponible" };
+            case VehicleStatus.RESERVED:
+                return { badge: "bg-amber-100 text-amber-800 border-amber-200", text: "Reservado" };
+            case VehicleStatus.RENTED:
+                return { badge: "bg-rose-100 text-rose-800 border-rose-200", text: "Arrendado" };
+            case VehicleStatus.NOT_AVAILABLE:
+                return { badge: "bg-slate-100 text-slate-700 border-slate-200", text: "No Disponible" };
+            default:
+                return { badge: "bg-gray-100 text-gray-800 border-gray-200", text: "Desconocido" };
+        }
+    };
+
+    const configStatus = getStatusStyle(vehicle.status);
+
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col justify-between">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col justify-between relative">
             <div className="p-5">
                 <div className="flex justify-between items-start mb-3">
                     <div>
-                        <span className="text-xs font-semibold text-indigo-600 uppercase tracking-wider">
-                            {vehicle.category}
-                        </span>
-                        <h3 className="text-xl font-bold text-gray-900 mt-1">
+                        <h3 className="text-xl font-bold text-gray-900">
                             {vehicle.brand} <span className="font-medium text-gray-600">{vehicle.model}</span>
                         </h3>
                     </div>
@@ -36,9 +52,8 @@ function CreateVehicleCard({ vehicle }: Props) {
                 </div>
             </div>
 
-            <div className="px-5 pb-5 pt-2 bg-gray-50/50 border-t border-gray-50">
+            <div className="px-5 pb-5 pt-2 bg-gray-50/50 border-t border-gray-50 space-y-2">
                 <button
-                    onClick={() => onSelect(vehicle)}
                     disabled={vehicle.status !== VehicleStatus.AVAILABLE}
                     className={`w-full py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 text-center ${
                         vehicle.status === VehicleStatus.AVAILABLE
@@ -48,8 +63,26 @@ function CreateVehicleCard({ vehicle }: Props) {
                 >
                     {vehicle.status === VehicleStatus.AVAILABLE ? "Arrendar Vehículo" : "No Disponible"}
                 </button>
+
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                    <button
+                        type="button"
+                        onClick={() => onEdit?.(vehicle)}
+                        className="py-1.5 px-3 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-indigo-600 transition-colors"
+                    >
+                        ✏️ Editar
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => onDelete?.(vehicle.id)}
+                        className="py-1.5 px-3 text-xs font-medium text-red-600 bg-white border border-gray-200 rounded-lg hover:bg-red-50 transition-colors"
+                    >
+                        🗑️ Eliminar
+                    </button>
+                </div>
             </div>
         </div>
     );
 }
+
 export default CreateVehicleCard;

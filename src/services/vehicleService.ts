@@ -16,7 +16,6 @@ export async function createVehicle(vehicle: DraftVehicle) {
 export async function getVehicles() {
     try {
         const { data } = await axios.get<Vehicle[]>(`http://localhost:8080/api/vehicle`);
-        console.log(data);
         if (data) {
             return data;
         }
@@ -26,7 +25,7 @@ export async function getVehicles() {
     }
 }
 
-export async function updateVehicle(vehicleId: number, vehicle: Vehicle) {
+export async function updateVehicle(vehicleId: number, vehicle: DraftVehicle) {
     try {
         const { data } = await axios.put<Vehicle>(`http://localhost:8080/api/vehicle/${vehicleId}`, vehicle);
         if (data) {

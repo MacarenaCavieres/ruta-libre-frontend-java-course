@@ -11,7 +11,6 @@ export type Vehicle = {
     brand: string;
     model: string;
     year: string;
-    category: string;
     status: VehicleStatus;
 };
 
@@ -25,7 +24,7 @@ export type DriverLicense = {
 export type DraftClient = {
     name: string;
     lastname: string;
-    driverLicense: DriverLicense;
+    license: DriverLicense;
 };
 
 export type Client = DraftClient & {
@@ -33,14 +32,18 @@ export type Client = DraftClient & {
 };
 
 export type DraftBooking = {
-    client: Client;
-    vehicle: Vehicle;
+    clientId: number;
+    vehicleId: number;
     startDate: Date;
     endDate: Date;
 };
 
-export type Booking = DraftBooking & {
+export type Booking = {
     id: number;
+    client: Client;
+    vehicle: Vehicle;
+    startDate: Date;
+    endDate: Date;
 };
 
 export type MessageResponse = {

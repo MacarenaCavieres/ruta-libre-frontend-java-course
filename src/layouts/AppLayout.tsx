@@ -22,6 +22,19 @@ function AppLayout() {
                     </NavLink>
 
                     <NavLink
+                        to="/booking"
+                        className={({ isActive }) =>
+                            `px-5 py-2.5 rounded-lg font-medium transition-colors ${
+                                isActive
+                                    ? "bg-gray-900 text-white shadow-sm"
+                                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                            }`
+                        }
+                    >
+                        Reservas
+                    </NavLink>
+
+                    <NavLink
                         to="/client"
                         className={({ isActive }) =>
                             `px-5 py-2.5 rounded-lg font-medium transition-colors ${
